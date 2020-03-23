@@ -1,0 +1,134 @@
+﻿
+
+<head>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script>
+        window.onkeydown = function (event) {
+            if (event.keyCode == 27) {                                  
+                vueapp.opType = '';                                       
+            }
+        };
+    </script>
+</head>
+
+<div id="BillDetailssapp" style="background-color: #fefefe;">
+
+    <div class="content_padding">
+        <input class="col-lg-10 input-field-form" type="text" placeholder="Строка поиска" v-model="query.searchString" v-on:change="getList()" />
+    </div>
+    <div class="content_padding">
+         <h2> <a asp-area="" asp-controller="Account" asp-action="UsersCount"><span class="glyphicon glyphicon-print"></span></a> Bill Details </h2>
+
+        <table class="table table-bordered custom-table">
+            <thead>
+                <tr>
+                    <th>
+                        №
+                    </th>
+                    <th>
+                        Customer Name
+                    </th>
+                    <th>
+                       Room No
+                    </th>
+                    <th>
+                        Booked From
+                    </th>
+                    <th>
+                       Booked Till
+                    </th>
+                    <th>
+                        Bill
+                    </th>
+                 </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>0001</td>
+                    <td>Andrey</td>
+                    <td>18</td>
+                    <td>01.03.2020</td>
+                    <td>03.03.2020</td>
+                    <td class="text-center"><button class="btn btn-primary active" v-on:click="beginOperation(null,'add',true)"><span class="glyphicon glyphicon-list-alt"></span></button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+    <div v-bind:class="{dialog_overlay:opType !==''}" v-if="opType !==''" v-on:mousedown="cancelOperation()">
+        <div class="dialog_box" style="width: 60%;" v-on:mousedown.stop>
+            <div class="content_padding">
+
+                <table class="content_padding col-lg-12 table table-bordered">
+                    <tr>
+                        <td>Room No : 101</td>
+                        <td>No Of Members : 1</td>
+                        <td>ID PROOF: </td>
+                    </tr>
+                    <tr>
+                        <td>Order Date From : 29-08-2017</td>
+                        <td>Order Date To : 31-08-2017</td>
+                        <td>Order Date To : 31-08-2017</td>
+                    </tr>
+                    <tr>
+                        <td>Customer Name : abb</td>
+                        <td>Customer Address :abc sadg asgdt</td>
+                        <td>ID PROOF: </td>
+                    </tr>
+                    <tr>
+                        <td>Customer Name : abb</td>
+                        <td>Customer Address :abc sadg asgdt</td>
+                        <td>ID PROOF: </td>
+                    </tr>
+
+                </table>
+
+
+                <div class="text-right content_padding">
+                    <button class="btn btn-primary active" v-on:click="cancelOperation()">Close</button>&nbsp;&nbsp;&nbsp;
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script src="~/js/commonVue.js" asp-append-version="true"></script>
+<script>
+    var vueapp = new Vue({
+        el: '#BillDetailssapp',
+        methods: {
+                getList: function() {
+                    var self = this;
+                    axios.get(this.baseUrl + "/GetList", this._getConfig(this.query)).then(function (response) {
+                        self.set = response.data;//Установим данные
+
+                    }).catch(this._servererror);//Если произошла ошибка при таймере, то покажем ошибку, и больше не будем запускать, до след. getList()
+            },
+            //Формирование configa для ajax
+            _getConfig: function (params) {
+                return {
+                    headers: { "content-type": "application/json" },//Важно, иначе axios по вх. data сам подставляет content-type, но .core работает по умолчанию с json
+                    params: params,
+                };
+            },
+        },
+
+        data: {
+                baseUrl: '@Url.Action("", "AdminRooms")',
+                query: { searchString:'' },
+        },
+            mixins: [
+
+                commonVue.createCrud(),
+            ],
+        })
+</script>
+
+
+

@@ -1,0 +1,147 @@
+﻿
+
+<head>
+    <script>
+        window.onkeydown = function (event) {
+            if (event.keyCode == 27) {                                  
+                vueapp.opType = '';                                       
+            }
+        };
+    </script>
+</head>
+
+<div id="CustomerDetailssapp" style="background-color: #fefefe;">
+
+    <div class="content_padding">
+        <input class="col-lg-10 input-field-form" type="text" placeholder="Строка поиска" v-model="query.searchString" v-on:change="getList()" />
+    </div>
+    <div class="content_padding">
+        <h2> <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Customer Details </h2>
+
+        <table class="table table-bordered custom-table">
+            <thead>
+                <tr>
+                    <th  >
+                        №
+                    </th>
+                    <th  >
+                        Customer Name
+                    </th>
+                    <th  >
+                        Address
+                    </th>
+                    <th  >
+                        Mobile No
+                    </th>
+                    <th  >
+                        Altername Mobile No
+                    </th>
+                    <th  >
+                        ID Proof
+                    </th>
+                    <th  >
+                        View
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="item in set">
+                    <td>{{item.id}}</td>
+                    <td>{{item.customerName}}</td>
+                    <td>{{item.address}}</td>
+                    <td>{{item.mobileNo}}</td>
+                    <td>{{item.alternameMobileNo}}</td>
+                    <td>{{item.idProof}}</td>
+                    <td class="text-center"><button class="btn btn-primary active" v-on:click="beginOperation(null,'add',true)"><span class="glyphicon glyphicon-eye-open"></span></button></td>
+                </tr>
+            </tbody>
+        </table>
+
+
+
+    </div>
+
+
+    <div v-bind:class="{dialog_overlay:opType !==''}" v-if="opType !==''" v-on:mousedown="cancelOperation()">
+        <div class="dialog_box" style="width: 60%;" v-on:mousedown.stop>
+            <div class="dialog_box_header">Order Details</div>
+
+            <div class="content_padding">
+
+                <table class="content_padding col-lg-12 table table-bordered">
+                    <tr>
+                        <td colspan="1">Room No : 101</td>
+                        <td colspan="1">No Of Members : 1</td>
+                        <td rowspan="2" style="vertical-align: middle;">ID PROOF: </td>
+                    </tr>
+                    <tr>
+                        <td>Order Date From : 29-08-2017</td>
+                        <td>Order Date To : 31-08-2017</td>
+                    </tr>
+                    <tr>
+                        <td>Customer Name : abb</td>
+                        <td colspan="2">Customer Address :abc sadg asgdt</td>
+                    </tr>
+                    <tr>
+                        <td>Customer Mobile No : 9852938456</td>
+                        <td colspan="2">Customer Alternate Mobile No : 985239867</td>
+                    </tr>
+                    <tr>
+                        <td colspan="1">Member Name : sdfg</td>
+                        <td colspan="1">Member Address : sagd sgsdg sd</td>
+                        <td rowspan="2" style="vertical-align: middle;">ID PROOF:</td>
+                    </tr>
+                    <tr>
+                        <td>Member Mobile No : 2565265465432</td>
+                        <td>Member Alternate Mobile No : 256523465432</td>
+                    </tr>
+                </table>
+
+
+                <div class="text-right content_padding">
+                    <button class="btn btn-primary active" v-on:click="cancelOperation()">Close</button>&nbsp;&nbsp;&nbsp;
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script src="~/js/commonVue.js" asp-append-version="true"></script>
+<script>
+    var vueapp = new Vue({
+        el: '#CustomerDetailssapp',
+        methods: {
+                getList: function() {
+                    var self = this;
+                    axios.get(this.baseUrl + "/GetList", this._getConfig(this.query)).then(function (response) {
+                        self.set = response.data;//Установим данные
+
+                    });
+            },
+            //Формирование configa для ajax
+            _getConfig: function (params) {
+                return {
+                    headers: { "content-type": "application/json" },//Важно, иначе axios по вх. data сам подставляет content-type, но .core работает по умолчанию с json
+                    params: params,
+                };
+            },
+        },
+
+        data: {
+                baseUrl: '@Url.Action("", "CustomerDetails")',
+                query: { searchString:'' },
+        },
+            mixins: [
+
+                commonVue.createCrud(),
+            ],
+        })
+</script>
+
+
+

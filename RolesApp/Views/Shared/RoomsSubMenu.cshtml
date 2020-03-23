@@ -1,0 +1,24 @@
+﻿@model string
+@{
+var controller = Model.ToUpper();
+}
+
+<ul class="second_menu">
+
+<li>
+<a class="@(controller == "AdminRooms".ToUpper() ? "selected" : "")" href="@Url.Action("Index", "AdminRooms")">
+Add rooms
+</a>
+</li>
+<li>
+<a class="@(controller == "AdminRooms".ToUpper() ? "selected" : "")" href="@Url.Action("Index", "AdminRooms")">
+Avalible Rooms
+</a>
+</li>
+<li>
+<a class="@(controller == "AdminRooms".ToUpper() ? "selected" : "")" href="@Url.Action("Index", "AdminRooms")">
+Booked Rooms
+</a>
+</li>
+
+</ul>

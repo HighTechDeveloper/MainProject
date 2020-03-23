@@ -1,0 +1,74 @@
+﻿@model RolesApp.Models.LoginModel
+@{
+    Layout = null;
+}
+    <head>
+        <title>Вход на сайт</title>
+        <script src="~/js/vue.js"></script>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+            <link rel="stylesheet" href="~/css/site.css" />
+            <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
+                  asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+                  asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        <link rel="icon" href="~/images/Logo.png" type="image/x-icon">
+    </head>
+
+<body class="app-background">
+    <div id="app">
+        <div class="text-center main-login">
+            {{ message }}
+        </div>
+
+        <div style="margin: auto; width: 385px;font-size: 22px; margin-bottom: 80px; ">
+            <div class="col-lg-2" style="padding-left: 0;">
+                <span style="color: grey;">Вход</span>
+            </div>
+            <div class="col-lg-5">
+                <a asp-action="Register" asp-controller="Account">Регистрация</a>
+            </div>
+        </div>
+
+        <div class="sub-login">
+            <form asp-action="Login" asp-controller="Account" asp-anti-forgery="true">
+                <div class="validation" asp-validation-summary="ModelOnly"></div>
+                <div>
+                    <div style="padding-bottom: 10px;">
+                        <span> Логин</span>
+                    </div>
+
+                    <div class="form-group">
+                        <input class="input-field-default" type="text" asp-for="Email" />
+                        <span asp-validation-for="Email" />
+                    </div>
+
+                    <div style="padding-bottom: 10px;">
+                        <span> Пароль</span>
+                    </div>
+
+                    <div class="form-group">
+                        <input class="input-field-default" asp-for="Password" />
+                        <span asp-validation-for="Password" />
+                    </div>
+                    <div class="form-group">
+                        <input class="MyBtn" type="submit" value="Войти" />
+                    </div>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                message: 'Вход на сайт',
+            }
+        })
+    </script>
+</body>
+
+
