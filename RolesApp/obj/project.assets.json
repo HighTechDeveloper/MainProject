@@ -12435,11 +12435,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\Projects\\RolesApp\\RolesApp\\RolesApp.csproj",
+      "projectUniqueName": "E:\\Projects\\GitRepositories\\clone\\MainProject\\RolesApp\\RolesApp.csproj",
       "projectName": "RolesApp",
-      "projectPath": "E:\\Projects\\RolesApp\\RolesApp\\RolesApp.csproj",
+      "projectPath": "E:\\Projects\\GitRepositories\\clone\\MainProject\\RolesApp\\RolesApp.csproj",
       "packagesPath": "C:\\Users\\ПК\\.nuget\\packages\\",
-      "outputPath": "E:\\Projects\\RolesApp\\RolesApp\\obj\\",
+      "outputPath": "E:\\Projects\\GitRepositories\\clone\\MainProject\\RolesApp\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
